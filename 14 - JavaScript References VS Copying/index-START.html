@@ -1,56 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Reference VS Copy</title>
+  </head>
+  <body>
+    <script>
+      // start with strings, numbers and booleans
+      let a = 1;
+      let b = a;
+      // copy, one change doesn't affect the other
 
-  <script>
-    // start with strings, numbers and booleans
+      // Let's say we have an array
+      const players = ["Wes", "Sarah", "Ryan", "Poppy"];
 
-    // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+      const players2 = players; // reference, both point at the same array, change at the same time
 
-    // and we want to make a copy of it.
+      // Copy array
+      const team = players.slice();
+      const team2 = [].concat(players);
+      const team3 = [...players];
+      const team4 = Array.from(players);
 
-    // You might think we can just do something like this:
+      // with Objects
+      const person = {
+        name: "Wes Bos",
+        age: 80,
+        social: {
+          twitter: "@donald",
+          facebook: "trump",
+        },
+      };
 
-    // however what happens when we update that array?
+      // Copy Objects
+      const cap = Object.assign({}, person, { number: 99 });
+      const cap2 = { ...person };
+      // 但即使这样copy也只能涉及一层，如果object里面有nested object，那依然只是reference，可搜索deep clone or use lodash
 
-    // now here is the problem!
-
-    // oh no - we have edited the original array too!
-
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
-
-    // So, how do we fix this? We take a copy instead!
-
-    // one way
-
-    // or create a new array and concat the old one in
-
-    // or use the new ES6 Spread
-
-    // now when we update it, the original one isn't changed
-
-    // The same thing goes for objects, let's say we have a person object
-
-    // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
-    };
-
-    // and think we make a copy:
-
-    // how do we take a copy instead?
-
-    // We will hopefully soon see the object ...spread
-
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
-
-  </script>
-
-</body>
+      const dev = JSON.parse(JSON.stringify(person));
+    </script>
+  </body>
 </html>
